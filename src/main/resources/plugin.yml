@@ -1,0 +1,5 @@
+name: ImageToParticle
+main: cn.daogecmd.imagetoparticle.Loader
+version: "1.0.0"
+author: daoge_cmd
+api: [ "1.0.13" ]
