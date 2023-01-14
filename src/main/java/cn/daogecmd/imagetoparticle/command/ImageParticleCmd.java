@@ -43,15 +43,15 @@ public class ImageParticleCmd extends Command {
             var imageName = listFormResponse.getClickedButton().getText();
             var createTestItemForm = new FormWindowCustom("CreateTestItemForm");
 
-            createTestItemForm.addElement(new ElementInput("§l§bunit §r(0 < value)", "", String.valueOf(D_UNIT)));
-            createTestItemForm.addElement(new ElementInput("§l§bsize §r(0 < value < <= 100)", "", String.valueOf(D_SIZE)));
-            createTestItemForm.addElement(new ElementInput("§l§blife §r(0 < value <= 1000)", "", String.valueOf(D_LIFE)));
-            createTestItemForm.addElement(new ElementSlider("§l§bmotion_x §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
-            createTestItemForm.addElement(new ElementSlider("§l§bmotion_y §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
-            createTestItemForm.addElement(new ElementSlider("§l§bmotion_z §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
-            createTestItemForm.addElement(new ElementInput("§l§bspeed §r(0 ~ 100)", "", String.valueOf(D_SPEED)));
-            createTestItemForm.addElement(new ElementInput("§l§baccele §r(-100 ~ 100)", "", String.valueOf(D_ACCELE)));
-            createTestItemForm.addElement(new ElementInput("§l§broll §r(If it's less than 0, it's random)", "", String.valueOf(D_ROLL)));
+            createTestItemForm.addElement(new ElementInput("§bunit §r(0 < value)", "", String.valueOf(D_UNIT)));
+            createTestItemForm.addElement(new ElementInput("§bsize §r(0 < value < <= 100)", "", String.valueOf(D_SIZE)));
+            createTestItemForm.addElement(new ElementInput("§blife §r(0 < value <= 1000)", "", String.valueOf(D_LIFE)));
+            createTestItemForm.addElement(new ElementSlider("§bmotion_x §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
+            createTestItemForm.addElement(new ElementSlider("§bmotion_y §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
+            createTestItemForm.addElement(new ElementSlider("§bmotion_z §r(unit: 0.01m) The real value will be subtracted by 100", 0, 200, 1, (float) D_MOTION + 100));
+            createTestItemForm.addElement(new ElementInput("§bspeed §r(0 ~ 100)", "", String.valueOf(D_SPEED)));
+            createTestItemForm.addElement(new ElementInput("§baccele §r(-100 ~ 100)", "", String.valueOf(D_ACCELE)));
+            createTestItemForm.addElement(new ElementInput("§broll §r(If it's less than 0, it's random)", "", String.valueOf(D_ROLL)));
 
             createTestItemForm.addHandler(((player1, formID1) -> {
                 FormResponseCustom CTIFResponse = createTestItemForm.getResponse();

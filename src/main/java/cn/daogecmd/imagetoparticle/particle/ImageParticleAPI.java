@@ -30,7 +30,7 @@ public final class ImageParticleAPI {
     private void setupTestItem() {
         testItem = Item.get(ItemID.FISHING_ROD);
         testItem.setNamedTag(this.testItem.getOrCreateNamedTag().putString(TEST_PARTICLE_TAG, TEST_PARTICLE_TAG));
-        testItem.setCustomName("§l§bImage Particle Test Item");
+        testItem.setCustomName("§bImage Particle Item");
     }
 
     public boolean isTestItem(Item item) {
@@ -70,7 +70,8 @@ public final class ImageParticleAPI {
             double zoom
     ) {
         if (particles.containsKey(name))
-            throw new RuntimeException("already registered Particle Name");
+//            throw new RuntimeException("already registered Particle Name");
+            return;//Able to reload?
         if (!fileExist(imageFile))
             throw new RuntimeException(imageFile + " is not exists");
         BufferedImage img;

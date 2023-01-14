@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.function.Supplier;
 
-public final class CustomParticle {
+public final class CustomParticle implements Cloneable{
     public static final Gson GSON;
     private static final String VAR_TYPE_ARRAY = "member_array";
     private static final String VAR_TYPE_FLOAT = "float";
@@ -95,6 +95,15 @@ public final class CustomParticle {
 
     public String encode() {
         return GSON.toJson(this);
+    }
+
+    @Override
+    public CustomParticle clone() {
+        try {
+            return (CustomParticle) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void checkVector() {

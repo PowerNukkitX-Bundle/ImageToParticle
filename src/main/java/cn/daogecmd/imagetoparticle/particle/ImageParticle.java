@@ -4,10 +4,9 @@ import cn.nukkit.level.DimensionEnum;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.network.protocol.SpawnParticleEffectPacket;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static java.lang.StrictMath.*;
 
@@ -40,10 +39,9 @@ public final class ImageParticle {
 
     public Set<SpawnParticleEffectPacket> encode(EulerAngle euler, CustomParticle customParticle, int count, float unit) {
         if (count < 0)
-            throw new IllegalArgumentException("A value greater than or equal to 0 should be obtained");
+            throw new IllegalArgumentException("A value greater than or equal to 0 should be obtained.");
         if (unit <= 0.0)
             throw new IllegalArgumentException("Must be a positive value.");
-        var p_count = 0;
         var center = euler.asVector3f();
         //yaw
         var yaw = toRadians(euler.getYaw());
@@ -57,21 +55,21 @@ public final class ImageParticle {
         var roll = toRadians(euler.getRoll());
         var rsin = sin(roll);
         var rcos = cos(roll);
-        Set<SpawnParticleEffectPacket> pks = new HashSet<>();
-        for (var data : particles) {
-            if (count == 0 || p_count++ % count == 0) {
+        AtomicInteger p_count = new AtomicInteger();
+        return particles.stream().parallel().map(data -> {
+            if (count == 0 || p_count.getAndIncrement() % count == 0) {
                 var x = data[1][0] * unit;
                 var y = data[1][1] * unit;
-                var dx = - y * rsin - x * rcos;
+                var dx = -y * rsin - x * rcos;
                 var dy = y * rcos - x * rsin;
                 var dz = dy * psin;
-                pks.add(pk(center.add(
+                return pk(center.add(
                         (float) (dz * ysin + dx * ycos),
                         (float) (dy * -pcos),
                         (float) (dz * -ycos + dx * ysin)
-                ), customParticle.setColor((int) data[0][0], (int) data[0][1], (int) data[0][2])));
+                ), customParticle.clone().setColor((int) data[0][0], (int) data[0][1], (int) data[0][2]));
             }
-        }
-        return pks;
+            return null;
+        }).filter(Objects::nonNull).collect(Collectors.toSet());
     }
 }

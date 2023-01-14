@@ -112,6 +112,6 @@ public final class Loader extends PluginBase implements Listener {
                 info.getFloat("unit"),
                 true
         );
-        player.sendPopup("§l§b" + round(yaw, 3) + " §f: §c" + round(pitch, 3) + " §f: §a" + round(roll, 3));
+        player.sendPopup("§b" + round(yaw, 3) + " §f: §c" + round(pitch, 3) + " §f: §a" + round(roll, 3));
     }
 }
