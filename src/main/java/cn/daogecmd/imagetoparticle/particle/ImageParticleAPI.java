@@ -6,7 +6,6 @@ import cn.nukkit.Server;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemFishingRod;
 import cn.nukkit.item.ItemID;
-import cn.nukkit.nbt.tag.CompoundTag;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -61,9 +60,14 @@ public final class ImageParticleAPI {
         return particles.keySet();
     }
 
+    public void registerImage(String name, String imageFile) {
+        registerImage(name, imageFile, 1.0);
+    }
+
     public void registerImage(
             String name,
-            String imageFile
+            String imageFile,
+            double zoom
     ) {
         if (particles.containsKey(name))
             throw new RuntimeException("already registered Particle Name");
@@ -75,6 +79,8 @@ public final class ImageParticleAPI {
         } catch (IOException e) {
             throw new RuntimeException(imageFile + " load failure");
         }
+        if (zoom != 1.0d)
+            img = zoomImage(img, (int) (img.getWidth() * zoom), (int) (img.getHeight() * zoom));
         var sx = img.getWidth();
         var sy = img.getHeight();
         var cx = sx / 2 - 0.5;
@@ -89,10 +95,9 @@ public final class ImageParticleAPI {
         for (var y = 0; y < sy; y++) {
             for (var x = 0; x < sx; x++) {
                 var colorAt = img.getRGB(x, y);
+                if (colorAt >> 24 == 0)
+                    continue;//Transparent
                 var a = ((~(colorAt >> 24)) << 1) & 0xff;
-//                if(a < 50){
-//                    continue;
-//                }
                 var color = new Color(colorAt);
                 data.add(new double[][]{
                         {color.getRed(), color.getGreen(), color.getBlue()},
@@ -139,5 +144,12 @@ public final class ImageParticleAPI {
 
     private boolean fileExist(String file) {
         return Files.exists(Path.of(file));
+    }
+
+    private BufferedImage zoomImage(BufferedImage image, int width, int height) {
+        var resultingImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        var outputImage = new BufferedImage(width, height, image.getType());
+        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+        return outputImage;
     }
 }

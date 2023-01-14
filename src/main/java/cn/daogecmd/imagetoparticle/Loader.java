@@ -62,7 +62,8 @@ public final class Loader extends PluginBase implements Listener {
         for (var name : config.getAll().keySet()) {
             api.registerImage(
                     name,
-                    imgPath.resolve(config.getString(name + ".file")).toString()
+                    imgPath.resolve(config.getString(name + ".file")).toString(),
+                    config.getDouble(name + ".zoom", 1.0d)
             );
         }
 
