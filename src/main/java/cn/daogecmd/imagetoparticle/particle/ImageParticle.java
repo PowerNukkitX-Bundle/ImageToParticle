@@ -62,7 +62,7 @@ public final class ImageParticle {
             if (count == 0 || p_count++ % count == 0) {
                 var x = data[1][0] * unit;
                 var y = data[1][1] * unit;
-                var dx = y * rsin + x * rcos;
+                var dx = - y * rsin - x * rcos;
                 var dy = y * rcos - x * rsin;
                 var dz = dy * psin;
                 pks.add(pk(center.add(

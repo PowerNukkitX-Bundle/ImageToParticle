@@ -1,6 +1,7 @@
 package cn.daogecmd.imagetoparticle.command;
 
 import cn.daogecmd.imagetoparticle.Loader;
+import cn.daogecmd.imagetoparticle.particle.ParticlePlayPreset;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.form.element.ElementButton;
@@ -19,7 +20,7 @@ public class ImageParticleCmd extends Command {
     private static final double D_MOTION = 0;
     private static final double D_SPEED = 0;
     private static final double D_ACCELE = 0;
-    private static final double D_ROLL = -1;
+    private static final double D_ROLL = 0;
 
     public ImageParticleCmd() {
         super("imageparticle", "made by daoge_cmd");
@@ -56,16 +57,19 @@ public class ImageParticleCmd extends Command {
                 FormResponseCustom CTIFResponse = createTestItemForm.getResponse();
                 if (CTIFResponse == null) return;
                 player1.getInventory().addItem(Loader.getInstance().getApi().createTestItem(
-                        imageName,
-                        Float.parseFloat(CTIFResponse.getInputResponse(0)),
-                        Float.parseFloat(CTIFResponse.getInputResponse(1)),
-                        Float.parseFloat(CTIFResponse.getInputResponse(2)),
-                        (CTIFResponse.getSliderResponse(3) - 100) / 100f,
-                        (CTIFResponse.getSliderResponse(4) - 100) / 100f,
-                        (CTIFResponse.getSliderResponse(5) - 100) / 100f,
-                        Float.parseFloat(CTIFResponse.getInputResponse(6)),
-                        Float.parseFloat(CTIFResponse.getInputResponse(7)),
-                        Float.parseFloat(CTIFResponse.getInputResponse(8))
+                        ParticlePlayPreset
+                                .builder()
+                                .name(imageName)
+                                .unit(Float.parseFloat(CTIFResponse.getInputResponse(0)))
+                                .size(Float.parseFloat(CTIFResponse.getInputResponse(1)))
+                                .life(Float.parseFloat(CTIFResponse.getInputResponse(2)))
+                                .motion_x((CTIFResponse.getSliderResponse(3) - 100) / 100f)
+                                .motion_y((CTIFResponse.getSliderResponse(4) - 100) / 100f)
+                                .motion_z((CTIFResponse.getSliderResponse(5) - 100) / 100f)
+                                .speed(Float.parseFloat(CTIFResponse.getInputResponse(6)))
+                                .accele(Float.parseFloat(CTIFResponse.getInputResponse(7)))
+                                .roll(Float.parseFloat(CTIFResponse.getInputResponse(8)))
+                                .build()
                 ));
             }));
             player.showFormWindow(createTestItemForm);

@@ -79,7 +79,7 @@ public final class Loader extends PluginBase implements Listener {
         event.setCancelled();
         var player = event.getPlayer();
         var info = (CompoundTag) item.getNamedTag().get(ImageParticleAPI.TEST_PARTICLE_TAG);
-        var location = player.getLocation();
+        var location = player.getLocation().add(0, player.getEyeHeight());
         var centerVector = location.add(player.getDirectionVector().multiply(4));
 
         var yaw = location.getYaw();

@@ -38,32 +38,10 @@ public final class ImageParticleAPI {
         return item instanceof ItemFishingRod && item.getNamedTag().contains(TEST_PARTICLE_TAG);
     }
 
-    public Item createTestItem(
-            String name,
-            float unit,
-            float size,
-            float life,
-            float motion_x,
-            float motion_y,
-            float motion_z,
-            float speed,
-            float accele,
-            float roll
-    ) {
-        var tag = new CompoundTag(TEST_PARTICLE_TAG)
-                .putString("name", name)
-                .putFloat("unit", unit)
-                .putFloat("size", size)
-                .putFloat("life", life)
-                .putFloat("motion_x", motion_x)
-                .putFloat("motion_y", motion_y)
-                .putFloat("motion_z", motion_z)
-                .putFloat("speed", speed)
-                .putFloat("accele", accele)
-                .putFloat("roll", roll);
+    public Item createTestItem(ParticlePlayPreset preset) {
         var item = testItem.clone();
-        item.setNamedTag(item.getNamedTag().put(TEST_PARTICLE_TAG, tag));
-        item.setLore("§cimage§r: " + name);
+        item.setNamedTag(preset.writeTo(item.getNamedTag()));
+        item.setLore(preset.toString());
         return item;
     }
 
